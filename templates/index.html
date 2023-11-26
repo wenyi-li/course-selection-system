@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>模拟选课系统</title>
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" height=" 70">
+        <h1>模拟选课系统</h1>
+    </header>
+    
+    <section class="courses">
+        <h2>可选课程</h2>
+        <ul>
+            {% for course in available_courses %}
+                <li>
+                    {{ course.name }} - {{ course.number }} ({{ course.teacher }})
+                    <form action="{{ url_for('select_course', course_id=course.id) }}" method="post" style="display: inline;">
+                        <input type="submit" value="选课">
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+    
+    <section class="selected-courses">
+        <h2>已选课程</h2>
+        <ul>
+            {% for course in selected_courses %}
+                <li>
+                    {{ course.name }} - {{ course.number }} ({{ course.teacher }})
+                    <form action="{{ url_for('remove_course', course_id=course.id) }}" method="post" style="display: inline;">
+                        <input type="submit" value="删除">
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+    
+    <!-- 已选课程列表 -->
+
+    <section class="user-info">
+        <h2>个人信息</h2>
+        <form id="userForm">
+            <label for="name">姓名:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="student_id">学号:</label>
+            <input type="text" id="student_id" name="student_id" required>
+
+            <input type="button" value="提交选课" onclick="submitSelection()">
+        </form>
+    </section>
+
+    <script>
+        function submitSelection() {
+            // 获取姓名和学号的值
+            var name = document.getElementById("name").value;
+            var studentId = document.getElementById("student_id").value;
+
+            // 此处可以通过 Ajax 将用户的选课信息提交到后端
+
+            // 弹出消息框
+            alert("恭喜你！选课成功！");
+        }
+    </script>
+
+
+    <footer>
+        <p>&copy; 高级软件工程课程作业 李文毅 202318015059008</p>
+    </footer>
+</body>
+</html>
